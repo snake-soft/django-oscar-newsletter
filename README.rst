@@ -1,30 +1,8 @@
 #################
-django-newsletter
+django-oscar-newsletter
 #################
 
-.. image:: https://img.shields.io/pypi/v/django-newsletter.svg
-    :target: https://pypi.python.org/pypi/django-newsletter
-
-.. image:: https://img.shields.io/pypi/pyversions/django-newsletter.svg
-    :target: https://pypi.org/project/django-newsletter/
-    :alt: Supported Python versions
-
- .. image:: https://img.shields.io/pypi/djversions/django-newsletter.svg
-    :target: https://pypi.org/project/django-newsletter/
-    :alt: Supported Django versions
-
-.. image:: https://github.com/jazzband/django-newsletter/workflows/Test/badge.svg
-   :target: https://github.com/jazzband/django-newsletter/actions
-   :alt: GitHub Actions
-
-.. image:: https://codecov.io/gh/jazzband/django-newsletter/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/jazzband/django-newsletter
-
-.. image:: https://jazzband.co/static/img/badge.svg
-    :target: https://jazzband.co/
-    :alt: Jazzband
-
-Newsletter application for the Django web framework.
+Newsletter application for the Django Oscar ecommerce framework.
 
 What is it?
 ===========
