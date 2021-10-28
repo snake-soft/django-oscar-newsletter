@@ -1,6 +1,6 @@
-#################
+#######################
 django-oscar-newsletter
-#################
+#######################
 
 Newsletter application for the Django Oscar ecommerce framework.
 
