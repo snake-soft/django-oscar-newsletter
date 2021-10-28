@@ -1,45 +1,53 @@
-{% load i18n %}<!DOCTYPE html>
+{% load thumbnail i18n %}<!DOCTYPE html>
 
 <html>
 <head>
-    <meta charset="utf-8">
-	<title>{{ newsletter.title }}: {{ message.title }}</title>
+  <meta charset="utf-8">
+  <title>{{ newsletter.title }}: {{ message.title }}</title>
+  <style>
+    @import url(http://fonts.googleapis.com/css?family=Roboto);
+    /* The rest of your CSS here */
+    *{ font-family: Roboto, Arial, sans-serif;}
+  </style>
 </head>
 <body>
-    <h1>{{ newsletter.title }}</h1>
-    <h2>{{ message.title }}</h2>
-    {% for article in message.articles.all %}
-        <h3>{{ article.title }}</h3>
-
-        {% include thumbnail_template %}
-
-        <div>{{ article.text|safe }}</div>
-
-        {% if article.url %}
-            <div><a href="{{ article.url }}">{% trans "Read more" %}</a></div>
-        {% endif %}
-    {% endfor %}
-    <ul>
-        {% if submission.publish %}
-        <li><a href="http://{{ site.domain }}{{ submission.get_absolute_url }}">{% trans "Read message online" %}</a></li>
-        {% endif %}
-        <li><a href="http://{{ site.domain }}{% url "newsletter_unsubscribe_request" newsletter.slug %}">{% trans "Unsubscribe" %}</a></li>
-    </ul>
-    {% if attachment_links %}
-        {% for att in message.attachments.all %}
-            {% if forloop.first %}
-                <strong>{% trans "Attachments" %}</strong>
-                <table>
-            {% endif %}
+  <div dir="ltr">
+    <center>
+      <table cellspacing=20>
+        <tbody>
+          {% for article in message.articles.all %}
             <tr>
-                <td>
-                    &#128206; <a href="{{ att.file.url }}">{{ att.file_name }}</a> ({{ att.file.size|filesizeformat }})
-                </td>
-            </tr>
-            {% if forloop.last %}
+              <td valign="top" align="center">
+                <table style="border: 1px solid #cccccc; background-color: #ffffff; width: 660px; background-position: initial initial; background-repeat: initial initial;" cellpadding="5" border="0">
+                  <tbody>
+                    <tr>
+                      <td style="padding:5px;" class="text" valign="top">
+                        <center>
+                          {% if article.url %}
+                            <a href="{{ article.url }}">
+                          {% endif %}
+                          {% if article.image %}
+                            <img src="{{ BASE_URL }}{% thumbnail article.image 800x533 quality=90 %}" width=800 height=533 alt="{{ article.title }}">
+                          {% endif %}
+                          {% if article.url %}
+                            </a>
+                          {% endif %}
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </center>
+  </div>
+  {% if newsletter.footer_template_html %}
+    {% include newsletter.footer_html %}
+  {% else %}
+    {% include './default_footer.html' %}
+  {% endif %}
 </body>
 </html>

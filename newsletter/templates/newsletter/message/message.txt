@@ -12,4 +12,5 @@
 
 ++++++++++++++++++++
 
-{% trans "Unsubscribe:" %} http://{{ site }}{% url "newsletter_unsubscribe_request" newsletter.slug %}
+{% include newsletter.footer_text %}
+{% trans "Unsubscribe:" %} {{ BASE_URL }}{% url 'newsletter_unsubscribe_request' newsletter.slug %}

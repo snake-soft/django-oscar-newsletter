@@ -1,0 +1,46 @@
+{% load thumbnail i18n %}
+
+<table class="row" width="100%" cellspacing="0" cellpadding="0">
+	<tbody>
+        <tr>
+            <td class="wrapper last" valign="top">
+                <table class="twelve columns" width="100%" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td style="padding:5px" class="text" valign="top">
+                            <p>* Angebote gültig für diesen Monat</p>
+                            <p>* Solange der Vorrat reicht&nbsp;</p>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="2px"align="center" style="padding: 20px; background: {{ CONFIG.color_1 }};"></td>
+        </tr>
+        <tr>
+            <td height="2px" bgcolor="{{ CONFIG.color_background }}" align="center">
+                <a href="{{ BASE_URL }}">
+                  <img src="{{ BASE_URL }}{% thumbnail CONFIG.logo 300x90 quality=90 %}" alt="logo" data-unique-identifier="">
+                </a>
+            </td>
+        </tr>
+        <tr>
+        <td style="color: #000; background: {{ CONFIG.color_1 }}; font-size: 24px; padding: 20px 0;" align="center">
+          <p>
+            <strong>Preise gelten nur bei online Bestellung!</strong>
+            <br> Infos unter Tel.: {{ CONFIG.company_support_phone }}
+          </p>
+        </td>
+        </tr>
+        <tr>
+            <td style="color: #000; background: {{ CONFIG.color_1 }}; font-size: 13px; padding-bottom: 10px;" align="center">
+              {{ CONFIG.company_name }} | {{ CONFIG.company_street }} | {{ CONFIG.company_postcode }} {{ CONFIG.company_city }} <br> Telefon: {{ CONFIG.company_support_phone }}
+              <br> <a href="{{ BASE_URL }}{{ impressum_url }}">Impressum</a> | <a href="{{ BASE_URL }}{{ delivery_times_url }}">Liefergebiete</a></td>
+        </tr>
+        <tr>
+            <td style="color: #333; font-size: 10px; padding: 5px;" align="center">Sie möchten unseren Newsletter nicht länger erhalten.&nbsp; <!--#link#--><a href="{{ BASE_URL }}{% url 'newsletter_unsubscribe_request' newsletter.slug %}">{% trans "Unsubscribe" %}</a><!--#/link#--></td>
+        </tr>
+    </tbody>
+</table>

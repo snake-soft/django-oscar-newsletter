@@ -18,3 +18,6 @@ docs/_*
 venv/
 coverage.xml
 .tox
+/.project
+/.pydevproject
+/.settings/

@@ -1,7 +1,12 @@
-from pkg_resources import get_distribution, DistributionNotFound
+import os
+from pathlib import Path
 
-try:
-    __version__ = get_distribution("django-newsletter").version
-except DistributionNotFound:
-    # package is not installed
-    __version__ = None
+def get_version():
+    path = Path(str(Path(__file__).parent.parent.parent) + os.sep + 'VERSION')
+    if path.is_file():
+        with open(path) as f:
+            return f.read().strip()
+    return '0.0.0'
+
+
+__version__ = get_version()

@@ -42,7 +42,8 @@ except (ImportError, RuntimeError):
     pass
 
 from .models import (
-    Newsletter, Subscription, Attachment, Article, Message, Submission
+    Newsletter, Subscription, Attachment, Article, Message, Submission,
+    get_additional_context,
 )
 
 from django.utils.timezone import now
@@ -69,6 +70,8 @@ class NewsletterAdmin(admin.ModelAdmin):
     list_display = (
         'title', 'admin_subscriptions', 'admin_messages', 'admin_submissions'
     )
+    fields = ('title', 'slug', 'email', 'sender', 'visible', 'send_html',
+              'footer_template_html', 'footer_template_text')
     prepopulated_fields = {'slug': ('title',)}
 
     """ List extensions """
@@ -240,17 +243,18 @@ BaseArticleInline = type('BaseArticleInline', ArticleInlineClassTuple, {})
 
 class ArticleInline(BaseArticleInline):
     model = Article
-    extra = 2
+    extra = 0
     formset = ArticleFormSet
     fieldsets = (
-        (None, {
-            'fields': ('title', 'text')
-        }),
         (_('Optional'), {
-            'fields': ('sortorder', 'url', 'image'),
-            'classes': ('collapse',)
+            'fields': ('sortorder', 'title', 'text'),
+            'classes': ('collapse', 'mb-5')
+        }),
+        (None, {
+            'fields': ('image', 'url')
         }),
     )
+
 
     # Perform any formfield overrides depending on specified settings
     formfield_overrides = {}
@@ -318,6 +322,7 @@ class MessageAdmin(NewsletterAdminLinkMixin, ExtendibleModelAdminMixin,
             'STATIC_URL': settings.STATIC_URL,
             'MEDIA_URL': settings.MEDIA_URL
         }
+        c = get_additional_context(c)
 
         return HttpResponse(message.html_template.render(c))
 
@@ -333,6 +338,7 @@ class MessageAdmin(NewsletterAdminLinkMixin, ExtendibleModelAdminMixin,
             'STATIC_URL': settings.STATIC_URL,
             'MEDIA_URL': settings.MEDIA_URL
         }
+        c = get_additional_context(c)
 
         return HttpResponse(
             message.text_template.render(c),
