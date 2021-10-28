@@ -56,6 +56,7 @@ setup(
     author='Snake-Soft',
     author_email='info@snake-soft.com',
     url='https://github.com/snake-soft/django-oscar-newsletter',
+    package_dir={'': '.'},
     packages=['newsletter'],
     include_package_data=True,
     classifiers=[
