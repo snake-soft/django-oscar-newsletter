@@ -12,3 +12,9 @@ recursive-include newsletter/fixtures *
 recursive-include newsletter/templates *
 recursive-include newsletter/static *
 recursive-include newsletter/locale *
+
+
+include *.md
+include VERSION
+include tests/*
+recursive-include src/django_oscar_newsletter/templates *.html

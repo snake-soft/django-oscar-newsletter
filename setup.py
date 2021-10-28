@@ -23,6 +23,8 @@ import warnings
 
 from setuptools import setup, find_packages
 
+from newsletter import __version__
+
 try:
     README = open('README.rst').read() + '\n\n'
     README += open('CHANGES.rst').read()
@@ -33,6 +35,7 @@ except:
 
 setup(
     name='django-oscar-newsletter',
+    version=__version__,
     setup_requires=[],
     description=(
         'Django app for managing multiple mass-mailing lists with both '
@@ -43,7 +46,6 @@ setup(
     long_description=README,
     install_requires=[
         "Django>=2.2.16",
-        "django-newsletter==0.9.1",
         "django-oscar>=3.0.0",
         "python-card-me<1.0",
         "ldif3<3.2",
@@ -54,7 +56,6 @@ setup(
     author='Snake-Soft',
     author_email='info@snake-soft.com',
     url='https://github.com/snake-soft/django-oscar-newsletter',
-    packages=find_packages(exclude=("tests", "test_project")),
     include_package_data=True,
     classifiers=[
         'Development Status :: 6 - Mature',
