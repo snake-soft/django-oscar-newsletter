@@ -3,18 +3,8 @@ include README.rst
 include LICENSE
 include COPYRIGHT
 
-# Sphinx documentation
-recursive-include docs *
-prune docs/_build
-
-# Fixtures, templates, static files, strings and test data
-recursive-include newsletter/fixtures *
-recursive-include newsletter/templates *
-recursive-include newsletter/static *
-recursive-include newsletter/locale *
+include-recursive newsletter *
 
 
 include *.md
 include VERSION
-include tests/*
-recursive-include src/django_oscar_newsletter/templates *.html

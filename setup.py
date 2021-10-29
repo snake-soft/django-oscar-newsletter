@@ -19,18 +19,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import warnings
-
 from setuptools import setup, find_packages
 
 from newsletter import __version__
-
-try:
-    README = open('README.rst').read() + '\n\n'
-    README += open('CHANGES.rst').read()
-except:
-    warnings.warn('Could not read README.rst and/or CHANGES.rst')
-    README = None
 
 
 setup(
@@ -43,7 +34,6 @@ setup(
         'for messages), images and a smart queueing system all right from '
         'the admin interface.'
     ),
-    long_description=README,
     install_requires=[
         "Django>=2.2.16",
         "django-oscar>=3.0.0",
@@ -56,7 +46,6 @@ setup(
     author='Snake-Soft',
     author_email='info@snake-soft.com',
     url='https://github.com/snake-soft/django-oscar-newsletter',
-    package_dir={'': '.'},
     packages=['newsletter'],
     include_package_data=True,
     classifiers=[
