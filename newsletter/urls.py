@@ -5,12 +5,15 @@ from .views import (
     NewsletterListView, NewsletterDetailView,
     SubmissionArchiveIndexView, SubmissionArchiveDetailView,
     SubscribeRequestView, UnsubscribeRequestView, UpdateRequestView,
-    ActionTemplateView, UpdateSubscriptionView,
+    ActionTemplateView, UpdateSubscriptionView, MessageGeneratorView,
 )
 
 register_converter(NewsletterActionsConverter, 'actions')
 
 urlpatterns = [
+
+    path('message-generator/', MessageGeneratorView.as_view(), name='message-generator', ),
+
     # Newsletter list and detail view
     path('', NewsletterListView.as_view(), name='newsletter_list'),
     path(

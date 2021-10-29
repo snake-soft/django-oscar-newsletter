@@ -16,6 +16,8 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext
 from django.utils.timezone import now
 from django.urls import reverse
+from django.apps import apps
+from django.contrib.flatpages.models import FlatPage
 
 from distutils.version import LooseVersion
 
@@ -24,8 +26,6 @@ from .utils import (
     make_activation_code, get_default_sites, ACTIONS
 )
 from .generator.models import NewsletterMixin
-from django.apps import apps
-from django.contrib.flatpages.models import FlatPage
 
 
 logger = logging.getLogger(__name__)

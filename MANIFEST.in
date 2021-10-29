@@ -1,10 +1,7 @@
 # Text files
 include README.rst
-include LICENSE
 include COPYRIGHT
 
-include newsletter *
-
-
-include *.md
 include VERSION
+
+recursive-include templates *
