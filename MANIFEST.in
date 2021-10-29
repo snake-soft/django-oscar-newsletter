@@ -3,7 +3,7 @@ include README.rst
 include LICENSE
 include COPYRIGHT
 
-include-recursive newsletter *
+include newsletter *
 
 
 include *.md
