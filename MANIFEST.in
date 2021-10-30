@@ -4,4 +4,4 @@ include COPYRIGHT
 
 include VERSION
 
-recursive-include newsletter/templates *
+recursive-include newsletter/ *
