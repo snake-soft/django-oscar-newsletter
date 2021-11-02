@@ -35,7 +35,7 @@ class MessageGenerator:
         articles = []
         for range_product in self.range_products:
             image = range_product.cached_slide if self.with_prices \
-                else range_product.image
+                else range_product.image.file
             article = Article.objects.update_or_create(
                 post=message,
                 image=image,
