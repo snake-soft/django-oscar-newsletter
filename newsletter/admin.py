@@ -70,7 +70,7 @@ class NewsletterAdmin(admin.ModelAdmin):
     list_display = (
         'title', 'admin_subscriptions', 'admin_messages', 'admin_submissions'
     )
-    fields = ('title', 'slug', 'email', 'sender', 'visible', 'send_html',
+    fields = ('title', 'slug', 'email', 'sender', 'visible',
               'footer_template_html', 'footer_template_text')
     prepopulated_fields = {'slug': ('title',)}
 
@@ -112,7 +112,7 @@ class SubmissionAdmin(NewsletterAdminLinkMixin, ExtendibleModelAdminMixin,
                       admin.ModelAdmin):
     form = SubmissionAdminForm
     list_display = (
-        'admin_message', 'admin_newsletter', 'admin_publish_date', 'publish',
+        'admin_message', 'admin_newsletter', 'admin_publish_date', #'publish',
         'admin_status_text', 'admin_status'
     )
     date_hierarchy = 'publish_date'
@@ -245,6 +245,8 @@ class ArticleInline(BaseArticleInline):
     model = Article
     extra = 0
     formset = ArticleFormSet
+    fields = ('image', 'url', 'sortorder')
+    '''
     fieldsets = (
         (_('Optional'), {
             'fields': ('sortorder', 'title', 'text'),
@@ -254,6 +256,7 @@ class ArticleInline(BaseArticleInline):
             'fields': ('image', 'url')
         }),
     )
+    '''
 
 
     # Perform any formfield overrides depending on specified settings
