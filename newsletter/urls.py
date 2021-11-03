@@ -7,6 +7,7 @@ from .views import (
     SubscribeRequestView, UnsubscribeRequestView, UpdateRequestView,
     ActionTemplateView, UpdateSubscriptionView, MessageGeneratorView,
 )
+from django.conf import settings
 
 register_converter(NewsletterActionsConverter, 'actions')
 
@@ -15,28 +16,6 @@ urlpatterns = [
     path('message-generator/', MessageGeneratorView.as_view(), name='message-generator', ),
 
     # Newsletter list and detail view
-    path('', NewsletterListView.as_view(), name='newsletter_list'),
-    path(
-        '<newsletter_slug>/',
-        NewsletterDetailView.as_view(), name='newsletter_detail'
-    ),
-
-    # Action request views
-    path(
-        '<newsletter_slug>/subscribe/',
-        SubscribeRequestView.as_view(),
-        name='newsletter_subscribe_request'
-    ),
-    path(
-        '<newsletter_slug>/subscribe/confirm/',
-        SubscribeRequestView.as_view(confirm=True),
-        name='newsletter_subscribe_confirm'
-    ),
-    path(
-        '<newsletter_slug>/update/',
-        UpdateRequestView.as_view(),
-        name='newsletter_update_request'
-    ),
     path(
         '<newsletter_slug>/unsubscribe/',
         UnsubscribeRequestView.as_view(),
@@ -84,3 +63,27 @@ urlpatterns = [
         SubmissionArchiveIndexView.as_view(), name='newsletter_archive'
     ),
 ]
+
+if getattr(settings, 'NEWSLETTER_ALLOW_SUBSCRIBE', False):
+    urlpatterns += [
+        path('', NewsletterListView.as_view(), name='newsletter_list'),
+        path(
+            '<newsletter_slug>/',
+            NewsletterDetailView.as_view(), name='newsletter_detail'
+        ),
+        path(
+            '<newsletter_slug>/subscribe/',
+            SubscribeRequestView.as_view(),
+            name='newsletter_subscribe_request'
+        ),
+        path(
+            '<newsletter_slug>/subscribe/confirm/',
+            SubscribeRequestView.as_view(confirm=True),
+            name='newsletter_subscribe_confirm'
+        ),
+        path(
+            '<newsletter_slug>/update/',
+            UpdateRequestView.as_view(),
+            name='newsletter_update_request'
+        ),
+    ]
