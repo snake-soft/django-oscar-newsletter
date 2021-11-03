@@ -22,26 +22,37 @@ class MessageGenerator:
         return message
 
     def _generate_message(self):
-        message = Message.objects.get_or_create(
+        slug = slugify(self.offer.name) + '_'
+        suffix = 0
+        while Message.objects.filter(
+                newsletter=self.newsletter,
+                slug=slug + str(suffix)):
+            suffix += 1
+
+        message = Message.objects.create(
             newsletter=self.newsletter,
-            slug=slugify(self.offer.name),
-            defaults={
-                'title': self.offer.name,
-            }
-        )[0]
+            slug=slug + str(suffix),
+            title=self.offer.name,
+        )
         return message
+
+    def _get_image(self, range_product):
+        image = None
+        if self.with_prices:
+            image = range_product.cached_slide
+        elif range_product.image:
+            image = range_product.image.file
+        return image or None
 
     def _generate_articles(self, message):
         articles = []
         for range_product in self.range_products:
-            image = range_product.cached_slide if self.with_prices \
-                else range_product.image.file
+            image = self._get_image(range_product)
             article = Article.objects.update_or_create(
                 post=message,
                 image=image,
                 defaults={
-                    'title': range_product.get_title(),
-                    #'sortorder': range_product.display_order,
+                    'title': range_product.get_title().replace('<br>', ' '),
                     'url': self.absolute_url(range_product.get_link()),
                     'text': '',
                 }
