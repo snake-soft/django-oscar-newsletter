@@ -14,7 +14,7 @@ class MessageGenerator:
         self.range = offer.benefit.range
         self.range_products = self.range.rangeproduct_set.filter(
             cached_slide__isnull=False
-        )
+        ).exclude(cached_slide='')
 
     def generate(self):
         message = self._generate_message()
