@@ -49,7 +49,7 @@ def is_authenticated(user):
 
 class NewsletterViewBase:
     """ Base class for newsletter views. """
-    queryset = Newsletter.on_site.filter(visible=True)
+    queryset = Newsletter.objects.filter(visible=True)
     allow_empty = False
     slug_url_kwarg = 'newsletter_slug'
 
@@ -173,7 +173,7 @@ class NewsletterMixin(ProcessUrlDataMixin):
 
         newsletter_queryset = kwargs.get(
             'newsletter_queryset',
-            Newsletter.on_site.all()
+            Newsletter.objects.all()
         )
         newsletter_slug = kwargs['newsletter_slug']
         self.newsletter = get_object_or_404(
