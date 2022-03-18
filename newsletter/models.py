@@ -36,8 +36,8 @@ AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 def get_additional_context(context):
     app_models = [model.__name__ for model in apps.get_models()]
     if 'Configuration' in app_models:
-        Configuration = apps.get_model('custom', 'Configuration')
-        context['CONFIG'] = Configuration.get_for_site()
+        site = Site.objects.get_current()
+        context['CONFIG'] = site.configuration
     scheme = 'http' if settings.DEBUG else 'https'
     context['BASE_URL'] = scheme + '://' + context['site'].domain
     try:
