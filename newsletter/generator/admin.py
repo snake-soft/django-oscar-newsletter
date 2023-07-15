@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.contrib.admin.options import TabularInline
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
