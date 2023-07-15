@@ -48,6 +48,8 @@ setup(
     url='https://github.com/snake-soft/django-oscar-newsletter',
     packages=['newsletter'],
     include_package_data=True,
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     classifiers=[
         'Development Status :: 6 - Mature',
         'Environment :: Web Environment',
