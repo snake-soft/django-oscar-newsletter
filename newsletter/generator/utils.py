@@ -1,3 +1,4 @@
+from uuid import uuid4
 from django.utils.text import slugify
 from urllib.parse import urlparse
 from ..models import Message, Article
@@ -31,7 +32,7 @@ class MessageGenerator:
 
         message = Message.objects.create(
             newsletter=self.newsletter,
-            slug=slug + str(suffix),
+            slug=str(uuid4()),
             title=self.offer.name,
         )
         return message
