@@ -179,8 +179,3 @@ class ArticleFormSet(forms.BaseInlineFormSet):
         for index, form in enumerate(self.extra_forms):
             form.initial['sortorder'] = next_sortorder + index * 10
 
-        '''
-        for form in self.forms:
-            form.fields['text'].required = False
-            form.fields['title'].required = False
-        '''

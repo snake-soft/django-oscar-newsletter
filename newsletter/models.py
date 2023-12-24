@@ -532,6 +532,8 @@ class Message(models.Model):
 
     def get_next_article_sortorder(self):
         """ Get next available sortorder for Article. """
+        if not self.id:
+            return 10
 
         next_order = self.articles.aggregate(
             models.Max('sortorder')
