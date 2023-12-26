@@ -7,31 +7,35 @@ from ..models import Message, Article
 class MessageGenerator:
     title = ''
 
-    def __init__(self, request, offer, newsletter, with_prices):
+    def __init__(self, request, offer, with_prices):
         self.request = request
         self.offer = offer
-        self.newsletter = newsletter
+        #self.newsletter = newsletter
         self.with_prices = with_prices
         self.range = offer.benefit.range
         self.range_products = self.range.rangeproduct_set.filter(
             cached_slide__isnull=False
         ).exclude(cached_slide='')
 
-    def generate(self):
-        message = self._generate_message()
+    def attach_message(self, message):
         self._generate_articles(message)
         return message
 
-    def _generate_message(self):
+    def generate(self, newsletter):
+        message = self._generate_message(newsletter)
+        self._generate_articles(message)
+        return message
+
+    def _generate_message(self, newsletter):
         slug = slugify(self.offer.name) + '_'
         suffix = 0
         while Message.objects.filter(
-                newsletter=self.newsletter,
+                newsletter=newsletter,
                 slug=slug + str(suffix)):
             suffix += 1
 
         message = Message.objects.create(
-            newsletter=self.newsletter,
+            newsletter=newsletter,
             slug=str(uuid4()),
             title=self.offer.name,
         )

@@ -274,6 +274,25 @@ class ArticleInline(BaseArticleInline):
         }
 
 
+class HasSubmissionFilter(admin.SimpleListFilter):
+    title = 'Ausgabe(n) erstellt'
+    parameter_name = 'has_submissions'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('True', 'Yes'),
+            ('False', 'No'),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'True':
+            return queryset.filter(submission__isnull=False)
+        elif self.value() == 'False':
+            return queryset.filter(submission__isnull=True)
+        else:
+            return queryset
+
+
 class MessageAdmin(NewsletterAdminLinkMixin, ExtendibleModelAdminMixin,
                    admin.ModelAdmin):
     save_as = True
@@ -281,7 +300,7 @@ class MessageAdmin(NewsletterAdminLinkMixin, ExtendibleModelAdminMixin,
         'admin_title', 'admin_newsletter', 'admin_preview', 'date_create',
         'date_modify'
     )
-    list_filter = ('newsletter', )
+    list_filter = ('newsletter', HasSubmissionFilter)
     date_hierarchy = 'date_create'
     prepopulated_fields = {'slug': ('title',)}
 
