@@ -1,6 +1,7 @@
 from uuid import uuid4
 from django.utils.text import slugify
 from urllib.parse import urlparse
+from apps.offer.slides import Slide
 from ..models import Message, Article
 
 
@@ -10,12 +11,9 @@ class MessageGenerator:
     def __init__(self, request, offer, with_prices):
         self.request = request
         self.offer = offer
-        #self.newsletter = newsletter
         self.with_prices = with_prices
         self.range = offer.benefit.range
-        self.range_products = self.range.rangeproduct_set.filter(
-            cached_slide__isnull=False
-        ).exclude(cached_slide='')
+        self.slides = Slide.objects.filter(rangeproduct__range=self.range)
 
     def attach_message(self, message):
         self._generate_articles(message)
@@ -41,29 +39,32 @@ class MessageGenerator:
         )
         return message
 
-    def _get_image(self, range_product):
-        image = None
-        if self.with_prices:
-            image = range_product.cached_slide
-        elif range_product.image:
-            image = range_product.image.file
-        return image or None
+    def _get_image(self, slide):
+        if slide.cached_slide:
+            return slide.cached_slide
+        return slide.image
 
     def _generate_articles(self, message):
         articles = []
-        for range_product in self.range_products:
-            image = self._get_image(range_product)
+        for slide in self.slides:
+            image = self._get_image(slide)
+            breakpoint()
             article = Article.objects.update_or_create(
                 post=message,
                 image=image,
                 defaults={
-                    'title': range_product.get_title().replace('<br>', ' '),
-                    'url': self.absolute_url(range_product.get_link()),
+                    'title': slide.get_title().replace('<br>', ' '),
+                    'url': self.get_url(slide),
                     'text': '',
                 }
             )[0]
             articles.append(article)
         return articles
+
+    def get_url(self, slide):
+        link = slide.get_link()
+        if link:
+            return self.absolute_url(slide.get_link())
 
     def absolute_url(self, url):
         is_absolute = bool(urlparse(url).netloc)
