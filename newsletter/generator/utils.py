@@ -48,7 +48,6 @@ class MessageGenerator:
         articles = []
         for slide in self.slides:
             image = self._get_image(slide)
-            breakpoint()
             article = Article.objects.update_or_create(
                 post=message,
                 image=image,
